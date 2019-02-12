@@ -10,7 +10,9 @@ import java.util.Date;
  */
 public class TestVO extends Test implements Serializable {
 
-    private Date dateFrom;
+	private static final long serialVersionUID = 1L;
+	
+	private Date dateFrom;
     private Date dateTo;
 
     public void setDateFrom(Date dateFrom) {

@@ -1,4 +1,4 @@
-package com.colodoo.manager.test.service;
+package com.colodoo.manager.test.service.mapper;
 
 import java.util.List;
 

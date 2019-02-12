@@ -1,0 +1,50 @@
+.accordion .accordion-header-selected {
+    background: #fff !important;
+}
+
+/*.easyui-tabs .tabs-panels {*/
+/*min-height: 600px !important;*/
+/*}*/
+
+/*.easyui-tabs .panel-body {*/
+/*padding: 10px;*/
+/*}*/
+
+.accordion .accordion-body {
+    padding: 10px !important;
+}
+
+.accordion {
+    border-top: none !important;
+    border-right: none !important;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+.panel-title {
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+
+.accordion .accordion-header-selected .panel-title {
+    color: #777 !important;
+}
+
+.tree-title {
+    font-size: 12px !important;
+}
+
+.tabs-title {
+    font-size: 12px !important;
+}
+
+.panel-body {
+    font-size: 12px !important;
+}
+
+.panel-body-noheader {
+    border-top-width: 0px !important;
+}

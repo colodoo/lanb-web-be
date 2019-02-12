@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.msg.service.MsgMapper">
+  <resultMap id="BaseResultMap" type="com.colodoo.framework.manager.msg.model.Msg">
+    <id column="msg_id" jdbcType="VARCHAR" property="msgId" />
+    <result column="msg_title" jdbcType="VARCHAR" property="msgTitle" />
+    <result column="msg_source" jdbcType="VARCHAR" property="msgSource" />
+    <result column="msg_destination" jdbcType="VARCHAR" property="msgDestination" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    msg_id, msg_title, msg_source, msg_destination, last_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.colodoo.framework.manager.msg.model.MsgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from msg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msg
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from msg
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.colodoo.framework.manager.msg.model.MsgExample">
+    delete from msg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.colodoo.framework.manager.msg.model.Msg">
+    insert into msg (msg_id, msg_title, msg_source, 
+      msg_destination, last_time, create_time
+      )
+    values (#{msgId,jdbcType=VARCHAR}, #{msgTitle,jdbcType=VARCHAR}, #{msgSource,jdbcType=VARCHAR}, 
+      #{msgDestination,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.colodoo.framework.manager.msg.model.Msg">
+    insert into msg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msgId != null">
+        msg_id,
+      </if>
+      <if test="msgTitle != null">
+        msg_title,
+      </if>
+      <if test="msgSource != null">
+        msg_source,
+      </if>
+      <if test="msgDestination != null">
+        msg_destination,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msgId != null">
+        #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTitle != null">
+        #{msgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null">
+        #{msgSource,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDestination != null">
+        #{msgDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.colodoo.framework.manager.msg.model.MsgExample" resultType="java.lang.Long">
+    select count(*) from msg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update msg
+    <set>
+      <if test="record.msgId != null">
+        msg_id = #{record.msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgTitle != null">
+        msg_title = #{record.msgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgSource != null">
+        msg_source = #{record.msgSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgDestination != null">
+        msg_destination = #{record.msgDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update msg
+    set msg_id = #{record.msgId,jdbcType=VARCHAR},
+      msg_title = #{record.msgTitle,jdbcType=VARCHAR},
+      msg_source = #{record.msgSource,jdbcType=VARCHAR},
+      msg_destination = #{record.msgDestination,jdbcType=VARCHAR},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.framework.manager.msg.model.Msg">
+    update msg
+    <set>
+      <if test="msgTitle != null">
+        msg_title = #{msgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="msgSource != null">
+        msg_source = #{msgSource,jdbcType=VARCHAR},
+      </if>
+      <if test="msgDestination != null">
+        msg_destination = #{msgDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.msg.model.Msg">
+    update msg
+    set msg_title = #{msgTitle,jdbcType=VARCHAR},
+      msg_source = #{msgSource,jdbcType=VARCHAR},
+      msg_destination = #{msgDestination,jdbcType=VARCHAR},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

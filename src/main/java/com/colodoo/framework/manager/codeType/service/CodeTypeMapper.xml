@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.codeType.service.CodeTypeMapper">
+  <resultMap id="BaseResultMap" type="com.colodoo.framework.manager.codeType.model.CodeType">
+    <id column="code_type_id" jdbcType="VARCHAR" property="codeTypeId" />
+    <result column="code_type_name" jdbcType="VARCHAR" property="codeTypeName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    code_type_id, code_type_name
+  </sql>
+  <select id="selectByExample" parameterType="com.colodoo.framework.manager.codeType.model.CodeTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from code_type
+    where code_type_id = #{codeTypeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from code_type
+    where code_type_id = #{codeTypeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.colodoo.framework.manager.codeType.model.CodeTypeExample">
+    delete from code_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.colodoo.framework.manager.codeType.model.CodeType">
+    insert into code_type (code_type_id, code_type_name)
+    values (#{codeTypeId,jdbcType=VARCHAR}, #{codeTypeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.colodoo.framework.manager.codeType.model.CodeType">
+    insert into code_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="codeTypeId != null">
+        code_type_id,
+      </if>
+      <if test="codeTypeName != null">
+        code_type_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="codeTypeId != null">
+        #{codeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="codeTypeName != null">
+        #{codeTypeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.colodoo.framework.manager.codeType.model.CodeTypeExample" resultType="java.lang.Long">
+    select count(*) from code_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update code_type
+    <set>
+      <if test="record.codeTypeId != null">
+        code_type_id = #{record.codeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeTypeName != null">
+        code_type_name = #{record.codeTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update code_type
+    set code_type_id = #{record.codeTypeId,jdbcType=VARCHAR},
+      code_type_name = #{record.codeTypeName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.framework.manager.codeType.model.CodeType">
+    update code_type
+    <set>
+      <if test="codeTypeName != null">
+        code_type_name = #{codeTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code_type_id = #{codeTypeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.codeType.model.CodeType">
+    update code_type
+    set code_type_name = #{codeTypeName,jdbcType=VARCHAR}
+    where code_type_id = #{codeTypeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

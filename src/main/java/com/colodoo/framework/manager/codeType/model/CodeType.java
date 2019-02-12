@@ -1,0 +1,3 @@
+package com.colodoo.framework.manager.codeType.model;
+
+public class CodeType {    private String codeTypeId;    private String codeTypeName;    public String getCodeTypeId() {        return codeTypeId;    }    public void setCodeTypeId(String codeTypeId) {        this.codeTypeId = codeTypeId == null ? null : codeTypeId.trim();    }    public String getCodeTypeName() {        return codeTypeName;    }    public void setCodeTypeName(String codeTypeName) {        this.codeTypeName = codeTypeName == null ? null : codeTypeName.trim();    }}

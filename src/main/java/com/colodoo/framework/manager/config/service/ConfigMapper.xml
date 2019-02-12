@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.config.service.ConfigMapper">
+  <resultMap id="BaseResultMap" type="com.colodoo.framework.manager.config.model.Config">
+    <id column="config_id" jdbcType="VARCHAR" property="configId" />
+    <result column="config_name" jdbcType="VARCHAR" property="configName" />
+    <result column="config_value" jdbcType="VARCHAR" property="configValue" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    config_id, config_name, config_value, sort_no, create_date, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.colodoo.framework.manager.config.model.ConfigExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from config
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from config
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.colodoo.framework.manager.config.model.ConfigExample">
+    delete from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.colodoo.framework.manager.config.model.Config">
+    insert into config (config_id, config_name, config_value, 
+      sort_no, create_date, remark
+      )
+    values (#{configId,jdbcType=VARCHAR}, #{configName,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{sortNo,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.colodoo.framework.manager.config.model.Config">
+    insert into config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        config_id,
+      </if>
+      <if test="configName != null">
+        config_name,
+      </if>
+      <if test="configValue != null">
+        config_value,
+      </if>
+      <if test="sortNo != null">
+        sort_no,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        #{configId,jdbcType=VARCHAR},
+      </if>
+      <if test="configName != null">
+        #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.colodoo.framework.manager.config.model.ConfigExample" resultType="java.lang.Long">
+    select count(*) from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config
+    <set>
+      <if test="record.configId != null">
+        config_id = #{record.configId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configName != null">
+        config_name = #{record.configName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configValue != null">
+        config_value = #{record.configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortNo != null">
+        sort_no = #{record.sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config
+    set config_id = #{record.configId,jdbcType=VARCHAR},
+      config_name = #{record.configName,jdbcType=VARCHAR},
+      config_value = #{record.configValue,jdbcType=VARCHAR},
+      sort_no = #{record.sortNo,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.framework.manager.config.model.Config">
+    update config
+    <set>
+      <if test="configName != null">
+        config_name = #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        config_value = #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.config.model.Config">
+    update config
+    set config_name = #{configName,jdbcType=VARCHAR},
+      config_value = #{configValue,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </update>
+</mapper>

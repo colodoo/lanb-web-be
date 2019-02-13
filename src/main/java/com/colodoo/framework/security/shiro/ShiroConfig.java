@@ -3,8 +3,10 @@ package com.colodoo.framework.security.shiro;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,7 +31,7 @@ public class ShiroConfig {
 	 * @param securityManager
 	 *            初始化 ShiroFilterFactoryBean 的时候需要注入 SecurityManager
 	 */
-	@Bean
+	@Bean("shiroFilter")
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		// 必须设置 SecurityManager
@@ -41,8 +43,8 @@ public class ShiroConfig {
 
 		// 设置拦截器
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-		// 开放登陆注册接口
-		filterChainDefinitionMap.put("/user/logout", "anon");
+		// 开放验证接口
+		filterChainDefinitionMap.put("/user/logout", "logout");
 		filterChainDefinitionMap.put("/user/loginCheck", "anon");
 		filterChainDefinitionMap.put("/user/register", "anon");
 		// 用户，需要角色权限 “user”
@@ -51,10 +53,22 @@ public class ShiroConfig {
 		// 动态载入权限
 		// ...
 		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
+		// 失效,故用拦截器拦截登录状态
 		filterChainDefinitionMap.put("/**", "authc");
-
+		
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+		
 		return shiroFilterFactoryBean;
+	}
+	
+	@Bean
+	public FilterRegistrationBean delegatingFilterProxy(){
+	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+	    proxy.setTargetFilterLifecycle(true);
+	    proxy.setTargetBeanName("shiroFilter");
+	    filterRegistrationBean.setFilter(proxy);
+	    return filterRegistrationBean;
 	}
 
 	/**

@@ -31,6 +31,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(logInterceptor);
-		registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/loginCheck").excludePathPatterns("/user/logout").addPathPatterns("/**");
+		// registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/loginCheck").excludePathPatterns("/user/logout");
 	}
 }

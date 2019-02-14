@@ -30,7 +30,8 @@ public class RoleService extends BaseService<Role> {
     */
     public int saveRole(Role model) {
         int ret = Contants.CODE_FAILED;
-        model.setRoleId(uuid());
+        // model.setRoleId(uuid());
+        model.setRoleId(model.getRoleName());
         // model.setCreateDate(new Date());
         // model.setLastDate(new Date());
         try {

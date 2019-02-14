@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -32,15 +33,16 @@ public class UserAction {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	SessionObject sessionObject;
 
 	@RequestMapping(value = "/loginCheck")
 	@ResponseBody
-	public Msg loginCheck(User model, HttpSession session, HttpServletRequest request) {
+	public Msg loginCheck(User model, HttpServletRequest request) {
 		Msg msg = new Msg();
 		try {
-			SessionObject sessionObject = (SessionObject) session.getAttribute("sessionObject");
 			// 已经登录
-			if (sessionObject != null) {
+			if (sessionObject.getUser() != null) {
 				msg.setSuccess(true);
 				model.setPassword(null);
 				model.setUserName(sessionObject.getUser().getUserName());
@@ -71,8 +73,11 @@ public class UserAction {
 	@ResponseBody
 	public Msg logout(HttpSession session) {
 		Msg msg = new Msg();
-		if (session.getAttribute("sessionObject") != null) {
-			session.removeAttribute("sessionObject");
+		if (sessionObject.getUser() != null) {
+			sessionObject.setUser(null);
+			sessionObject.setRoleUsers(null);
+			Subject subject = SecurityUtils.getSubject();
+			subject.logout();
 			msg.setSuccess(true);
 			msg.setMsg("注销成功!");
 		} else {
@@ -86,14 +91,20 @@ public class UserAction {
 	@ResponseBody
 	public Map register(User model) {
 		Map map = new HashMap();
-		boolean isSuccessed = userService.register(model);
-		if (isSuccessed) {
-			map.put("success", true);
-			map.put("msg", "注册成功!");
-		} else {
-			map.put("success", false);
-			map.put("msg", "注册失败!");
+		boolean isSuccessed = false;
+		try {
+			isSuccessed = userService.saveRegister(model);
+			if (isSuccessed) {
+				map.put("success", true);
+				map.put("msg", "注册成功!");
+			} else {
+				map.put("success", false);
+				map.put("msg", "注册失败!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		return map;
 	}
 

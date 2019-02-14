@@ -17,7 +17,14 @@ public class IndexAction {
 	@RequestMapping(value = "/notRole")
     @ResponseBody
 	public Msg noRole() {
-		Msg msg = new Msg(false, "", "您所登录用户,没有该权限!");
+		Msg msg = new Msg(false, "", "您未登录或者没有相应权限!");
+        return msg;
+	}
+	
+	@RequestMapping(value = "/404")
+    @ResponseBody
+	public Msg error() {
+		Msg msg = new Msg(false, "", "您访问的地址不存在!");
         return msg;
 	}
 }

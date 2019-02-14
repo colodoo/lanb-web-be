@@ -24,12 +24,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA
+ * 自定义 Realm
+ * 
+ * @author colodoo
  *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description 自定义 Realm
- * @Date 2018-03-25
- * @Time 21:46
  */
 @Component
 @Slf4j
@@ -39,8 +37,6 @@ public class CustomRealm extends AuthorizingRealm {
     private UserMapper userMapper;
     @Autowired
     private RoleUserMapper roleUserMapper;
-    @Autowired
-    private RoleMapper roleMapper;
 
     /**
      * 获取身份验证信息
@@ -52,7 +48,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        // 从数据库获取对应用户名密码的用户
+        /*// 从数据库获取对应用户名密码的用户
         UserExample example = new UserExample();
         example.createCriteria().andUserNameEqualTo(token.getUsername());
         List<User> users = userMapper.selectByExample(example);
@@ -64,8 +60,8 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AccountException("用户名不正确");
         } else if (!password.equals(new String((char[]) token.getCredentials()))) {
             throw new AccountException("密码不正确");
-        }
-        return new SimpleAuthenticationInfo(token.getPrincipal(), password, getName());
+        }*/
+        return new SimpleAuthenticationInfo(token.getPrincipal(), new String((char[]) token.getCredentials()), getName());
     }
 
     /**
@@ -96,8 +92,7 @@ public class CustomRealm extends AuthorizingRealm {
         //找所有角色
         Set<String> set = new HashSet<>();
         for(RoleUser roleUser: roleUsers) {
-            Role role = roleMapper.selectByPrimaryKey(roleUser.getRoleId());
-            set.add(role.getRoleName());
+            set.add(roleUser.getRoleId());
         }
 
         //设置该用户拥有的角色

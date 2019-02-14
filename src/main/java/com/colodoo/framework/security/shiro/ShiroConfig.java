@@ -12,12 +12,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA
+ * shiro 配置
+ * 
+ * @author colodoo
  *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description shiro 配置
- * @Date 2018-03-28
- * @Time 17:21
  */
 @Configuration
 public class ShiroConfig {
@@ -44,7 +42,7 @@ public class ShiroConfig {
 		// 设置拦截器
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		// 开放验证接口
-		filterChainDefinitionMap.put("/user/logout", "logout");
+		filterChainDefinitionMap.put("/user/logout", "anon");
 		filterChainDefinitionMap.put("/user/loginCheck", "anon");
 		filterChainDefinitionMap.put("/user/register", "anon");
 		// 用户，需要角色权限 “user”
@@ -53,7 +51,6 @@ public class ShiroConfig {
 		// 动态载入权限
 		// ...
 		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-		// 失效,故用拦截器拦截登录状态
 		filterChainDefinitionMap.put("/**", "authc");
 		
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

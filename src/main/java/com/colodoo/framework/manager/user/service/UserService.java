@@ -41,6 +41,8 @@ public class UserService {
 	HttpSession session;
 	@Autowired
 	LogService logService;
+	@Autowired
+	SessionObject sessionObject;
 
 	public int save(User model) {
 		model.setUserId(StringUtil.uuid());
@@ -89,15 +91,13 @@ public class UserService {
 		List<User> users = userMapper.selectByExample(example);
 		if (users.size() == 1) {
 			msg.setSuccess(true);
-			// 成功以后创建sessionObject
-			SessionObject sessionObject = new SessionObject();
+			// 成功以后填充sessionObject
 			User user = users.get(0);
 			sessionObject.setUser(user);
 			RoleUserExample roleUserExample = new RoleUserExample();
 			roleUserExample.createCriteria().andUserIdEqualTo(user.getUserId());
 			List<RoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
 			sessionObject.setRoleUsers(roleUsers);
-			session.setAttribute("sessionObject", sessionObject);
 			return msg;
 		} else {
 			this.failLogin(model, request);
@@ -150,7 +150,7 @@ public class UserService {
 		}*/
 	}
 
-	public boolean register(User model) {
+	public boolean saveRegister(User model) throws Exception {
 		// 先判断信息的完整性
 		if (model.getUserName() == null || "".equals(model.getUserName()) || model.getPassword() == null || "".equals(model.getPassword())) {
 			return false;
@@ -159,9 +159,11 @@ public class UserService {
 		// 再进行操作
 		model.setEnable(Contants.TRUE);
 		model.setTryCount(0);
-		if (save(model) > 0) {
+		int ret = save(model);
+		if (ret > 0) {
 			return true;
 		}
+		
 		return false;
 	}
 }

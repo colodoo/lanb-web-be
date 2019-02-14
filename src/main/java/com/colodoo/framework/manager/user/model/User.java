@@ -2,10 +2,14 @@ package com.colodoo.framework.manager.user.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
-    private String userId;
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private String userId;
     private String userName;
     private String password;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

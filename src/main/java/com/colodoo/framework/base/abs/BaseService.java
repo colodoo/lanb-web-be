@@ -40,6 +40,9 @@ public abstract class BaseService<M> {
 
     @Autowired
     private SqlSessionFactory sessionFactory;
+    
+    @Autowired
+    private SessionObject sessioObject;
 
     /*抽象方法相关*/
     private static final String MAPPER_SUFFIX = "Mapper";
@@ -364,7 +367,8 @@ public abstract class BaseService<M> {
 
     /*取当前会话对象*/
     public SessionObject getSessionObject() {
-        return (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
+    	// return (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
+    	return sessioObject;
     }
 
 }

@@ -37,7 +37,7 @@ public class Contants {
     //登录成功
     public static final String LOGIN_SUCCESS = "登录成功!";
     //登录失败
-    public static final String LOGIN_FAIL = "登录失败!";
+    public static final String LOGIN_FAIL = "您尚未登陆或登录失败!";
     //已经登录
     public static final String LOGINED = "您已经登录!";
 

@@ -41,8 +41,6 @@ public class UserService {
 	HttpSession session;
 	@Autowired
 	LogService logService;
-	@Autowired
-	SessionObject sessionObject;
 
 	public int save(User model) {
 		model.setUserId(StringUtil.uuid());
@@ -91,6 +89,7 @@ public class UserService {
 		List<User> users = userMapper.selectByExample(example);
 		if (users.size() == 1) {
 			msg.setSuccess(true);
+			SessionObject sessionObject = new SessionObject();
 			// 成功以后填充sessionObject
 			User user = users.get(0);
 			sessionObject.setUser(user);
@@ -98,6 +97,7 @@ public class UserService {
 			roleUserExample.createCriteria().andUserIdEqualTo(user.getUserId());
 			List<RoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
 			sessionObject.setRoleUsers(roleUsers);
+			session.setAttribute(Contants.SESSION_OBJECT_KEY, sessionObject);
 			return msg;
 		} else {
 			this.failLogin(model, request);

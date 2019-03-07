@@ -33,16 +33,16 @@ public class UserAction {
 
 	@Autowired
 	UserService userService;
-	@Autowired
-	SessionObject sessionObject;
 
 	@RequestMapping(value = "/loginCheck")
 	@ResponseBody
 	public Msg loginCheck(User model, HttpServletRequest request) {
 		Msg msg = new Msg();
+		HttpSession session = request.getSession();
+		SessionObject sessionObject = (SessionObject)session.getAttribute(Contants.SESSION_OBJECT_KEY);
 		try {
 			// 已经登录
-			if (sessionObject.getUser() != null) {
+			if (sessionObject != null && sessionObject.getUser() != null) {
 				msg.setSuccess(true);
 				model.setPassword(null);
 				model.setUserName(sessionObject.getUser().getUserName());
@@ -73,11 +73,14 @@ public class UserAction {
 	@ResponseBody
 	public Msg logout(HttpSession session) {
 		Msg msg = new Msg();
+		SessionObject sessionObject = (SessionObject)session.getAttribute(Contants.SESSION_OBJECT_KEY);
 		if (sessionObject.getUser() != null) {
 			sessionObject.setUser(null);
 			sessionObject.setRoleUsers(null);
 			Subject subject = SecurityUtils.getSubject();
 			subject.logout();
+			session.removeAttribute(Contants.SESSION_OBJECT_KEY);
+			session.invalidate();
 			msg.setSuccess(true);
 			msg.setMsg("注销成功!");
 		} else {

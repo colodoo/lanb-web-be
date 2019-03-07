@@ -14,8 +14,8 @@ import org.springframework.web.context.annotation.SessionScope;
  * @date 2018/10/18 15:55
  * @description
  */
-@SessionScope
-@Component(value = "sessionObject")
+//@SessionScope
+//@Component(value = "sessionObject")
 public class SessionObject implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

@@ -1,14 +1,14 @@
-package ${packageName}.model;
+package com.colodoo.manager.batch.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
 * @author colodoo
-* @date ${.now?date} ${.now?time}
+* @date 2019-3-13 21:15:30
 * @description 
 */
-public class ${tableName?cap_first}VO extends ${tableName?cap_first} implements Serializable {
+public class BatchVO extends Batch implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

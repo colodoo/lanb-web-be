@@ -171,11 +171,9 @@ public class CreaterAction {
         try {
             String result = createrService.createServiceString(serviceParm);
             rspMap.put("result", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
         return rspMap;
     }
 

@@ -30,7 +30,7 @@ spring.devtools.restart.enabled: true
 
 # 代码生成相关
 creater:
-  src-path: H:\\Projects\\Java\\Spring\\lanb-web-be
+  src-path: E:\\dev\\java\\lanb-web-be
   table-schema: lanb_web_be
 
 # redis配置

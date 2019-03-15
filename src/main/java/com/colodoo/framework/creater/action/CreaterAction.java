@@ -45,15 +45,17 @@ public class CreaterAction {
      */
     @RequestMapping(value = "/getSelectQueryByTemplate")
     @ResponseBody
-    public String getSelectQueryByTemplate(String tableName) {
+    public Map getSelectQueryByTemplate(String tableName) {
+    	Map rspMap = new HashMap();
         try {
-            return createrService.getSelectQueryByTemplate(tableName);
+            String result = createrService.getSelectQueryByTemplate(tableName);
+            rspMap.put("result", result);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
             e.printStackTrace();
         }
-        return "";
+        return rspMap;
     }
 
     /**
@@ -70,9 +72,6 @@ public class CreaterAction {
             String mybatisStr = createrService.createMybatisString(allParm);
             String serviceStr = createrService.createServiceString(allParm);
             String actionStr = createrService.createActionString(allParm);
-            rspMap.put("mybatis", mybatisStr);
-            rspMap.put("service", serviceStr);
-            rspMap.put("action", actionStr);
             rspMap.put("msg", "创建成功!");
         } catch (Exception e) {
             e.printStackTrace();

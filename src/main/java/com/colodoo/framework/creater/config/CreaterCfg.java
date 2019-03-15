@@ -1,31 +1,46 @@
 package com.colodoo.framework.creater.config;
 
+import java.io.Serializable;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @ConfigurationProperties(prefix = "creater")
 @Component
-public class CreaterCfg {
+public class CreaterCfg implements Serializable {
 
-    //项目源代码地址
-    private String srcPath;
+	private static final long serialVersionUID = 1L;
 
-    //数据库名
-    private String tableSchema;
+	// 项目源代码地址
+	private String srcPath;
 
-    public String getTableSchema() {
-        return tableSchema;
-    }
+	// 数据库名
+	private String tableSchema;
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema;
-    }
+	// 数据库地址
+	private String url;
 
-    public String getSrcPath() {
-        return srcPath;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setSrcPath(String srcPath) {
-        this.srcPath = srcPath;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getTableSchema() {
+		return tableSchema;
+	}
+
+	public void setTableSchema(String tableSchema) {
+		this.tableSchema = tableSchema;
+	}
+
+	public String getSrcPath() {
+		return srcPath;
+	}
+
+	public void setSrcPath(String srcPath) {
+		this.srcPath = srcPath;
+	}
 }

@@ -4,12 +4,15 @@ import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import ${packageName}.model.${tableName?cap_first};
+import ${packageName}.model.${tableName?cap_first}VO;
 import com.colodoo.framework.easyui.Page;
 import ${packageName}.model.${tableName?cap_first}Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ${packageName}.service.mapper.${tableName?cap_first}RelationMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -21,6 +24,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_first}> {
+
+	@Autowired
+	${tableName?cap_first}RelationMapper relationMapper;
 
     /**
     * 新增数据
@@ -94,11 +100,10 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
     *
     * @return
     */
-    public List<${tableName?cap_first}> query() {
+    public List<${tableName?cap_first}> query(${tableName?cap_first}VO model) {
         List<${tableName?cap_first}> list = null;
-        ${tableName?cap_first}Example example = new ${tableName?cap_first}Example();
         try {
-            list = this.find(example);
+            list = relationMapper.get${tableName?cap_first}List(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -111,12 +116,12 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
     * @param page
     * @return
     */
-    public PageInfo query(Page page) {
+    public PageInfo query(Page page, ${tableName?cap_first}VO model) {
         PageInfo pageInfo;
         List<${tableName?cap_first}> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
-            list = this.find();
+            list = relationMapper.get${tableName?cap_first}List(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }

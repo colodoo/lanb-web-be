@@ -1,6 +1,7 @@
 package ${packageName}.action;
 
 import ${packageName}.model.${tableName?cap_first};
+import ${packageName}.model.${tableName?cap_first}VO;
 import ${packageName}.service.${tableName?cap_first}Service;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.easyui.Page;
@@ -26,11 +27,6 @@ public class ${tableName?cap_first}Action {
 
     @Autowired
     ${tableName?cap_first}Service ${tableName}Service;
-
-    @RequestMapping(value = "/${tableName}Manager")
-    public String ${tableName}Manager() {
-        return "manager/${tableName}/${tableName}Manager";
-    }
 
     @RequestMapping(value = "/save")
     @ResponseBody
@@ -81,15 +77,15 @@ public class ${tableName?cap_first}Action {
 
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<${tableName?cap_first}> query() {
-        return ${tableName}Service.query();
+    public List<${tableName?cap_first}> query(${tableName?cap_first}VO model) {
+        return ${tableName}Service.query(model);
     }
 
     @RequestMapping(value = "/queryPage")
     @ResponseBody
-    public Map query(Page page) {
+    public Map query(Page page, ${tableName?cap_first}VO model) {
         Map rspMap = new HashMap();
-        PageInfo info = ${tableName}Service.query(page);
+        PageInfo info = ${tableName}Service.query(page, model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;

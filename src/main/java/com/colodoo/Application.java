@@ -7,7 +7,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 @SpringBootApplication
 @EnableRedisHttpSession
-@MapperScan({"com.colodoo.**.service", "com.colodoo.**.service.mapper"})
+@MapperScan({"com.colodoo.**.service"})
 public class Application {
 
     public static void main(String[] args) {

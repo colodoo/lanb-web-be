@@ -67,25 +67,28 @@ public class CreaterService {
 		for (int i = 0; i < columns.size(); i++) {
 			Column column = columns.get(i);
 			if (i == columns.size() - 1) {
-				resultSql += column.getColumnName() + " as " + StringUtil.underlineToCamel(column.getColumnName());
+				resultSql += column.getColumnName() + " as a." + StringUtil.underlineToCamel(column.getColumnName());
 			} else {
-				resultSql += column.getColumnName() + " as " + StringUtil.underlineToCamel(column.getColumnName())
+				resultSql += column.getColumnName() + " as a." + StringUtil.underlineToCamel(column.getColumnName())
 						+ ", ";
 			}
 		}
 
-		resultSql += "from " + tableName + " where ";
+		resultSql += " from " + tableName + "<where> ";
 
 		for (int i = 0; i < columns.size(); i++) {
 			Column column = columns.get(i);
 			if (i == columns.size() - 1) {
-				resultSql += column.getColumnName() + " = #{" + StringUtil.underlineToCamel(column.getColumnName())
+				resultSql += "a." + column.getColumnName() + " = #{" + StringUtil.underlineToCamel(column.getColumnName())
 						+ "}";
 			} else {
-				resultSql += column.getColumnName() + " = #{" + StringUtil.underlineToCamel(column.getColumnName())
+				resultSql += "a." + column.getColumnName() + " = #{" + StringUtil.underlineToCamel(column.getColumnName())
 						+ "} and ";
 			}
 		}
+		
+		resultSql += "</where>";
+		
 		return resultSql;
 	}
 
@@ -133,6 +136,9 @@ public class CreaterService {
 			ConfigurationParser cp = new ConfigurationParser(warnings);
 			org.mybatis.generator.config.Configuration config = cp.parseConfiguration(configFile);
 			for (Context ctx : config.getContexts()) {
+				// 设置数据库
+				JDBCConnectionConfiguration jdbcConnectionConfiguration = ctx.getJdbcConnectionConfiguration();
+				jdbcConnectionConfiguration.setConnectionURL(createrCfg.getUrl());
 				// 设置model生成位置
 				JavaModelGeneratorConfiguration model = ctx.getJavaModelGeneratorConfiguration();
 				model.setTargetPackage(mybatisParm.getPackageName() + ".model");
@@ -172,9 +178,6 @@ public class CreaterService {
 			String str = null;
 			String rs = "";
 			while ((str = br.readLine()) != null) {
-				if (str == null) {
-					continue;
-				}
 				if (str.contains("package")) {
 					str += "\n" + "import org.springframework.format.annotation.DateTimeFormat;";
 					str += "\n" + "import com.fasterxml.jackson.annotation.JsonFormat;";
@@ -324,7 +327,8 @@ public class CreaterService {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("tableName", StringUtil.underlineToCamel2(serviceParm.getTableName()));
 		paramMap.put("packageName", serviceParm.getPackageName());
-
+		paramMap.put("SQLstring", this.getSelectQueryByTemplate(serviceParm.getTableName()));
+		
 		String resultDirStr = createrCfg.getSrcPath() + JAVA_ROOT_PATH + serviceParm.getPackageName().replace(".", "\\")
 				+ "\\service";
 		String mapperDirStr = resultDirStr + "\\mapper";

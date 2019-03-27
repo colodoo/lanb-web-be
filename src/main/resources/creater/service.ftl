@@ -11,7 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ${packageName}.service.mapper.${tableName?cap_first}RelationMapper;
+import ${packageName}.service.mapper.${tableName?cap_first}SQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_first}> {
 
 	@Autowired
-	${tableName?cap_first}RelationMapper relationMapper;
+	${tableName?cap_first}SQLMapper sqlMapper;
 
     /**
     * 新增数据
@@ -103,7 +103,7 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
     public List<${tableName?cap_first}> query(${tableName?cap_first}VO model) {
         List<${tableName?cap_first}> list = null;
         try {
-            list = relationMapper.get${tableName?cap_first}List(model);
+            list = sqlMapper.get${tableName?cap_first}List(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -121,7 +121,7 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
         List<${tableName?cap_first}> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
-            list = relationMapper.get${tableName?cap_first}List(model);
+            list = sqlMapper.get${tableName?cap_first}List(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
-* @author colodoo
+* @author ${name!"colodoo"}
 * @date ${.now?date} ${.now?time}
 * @description 
 */

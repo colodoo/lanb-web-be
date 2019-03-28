@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.List;
 
 /**
-* @author colodoo
+* @author ${name!"colodoo"}
 * @date ${.now?date} ${.now?time}
 * @description
 */

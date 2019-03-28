@@ -7,7 +7,7 @@ import ${packageName}.model.${tableName?cap_first}VO;
 import ${packageName}.model.${tableName?cap_first};
 
 /**
- * @author colodoo
+ * @author ${name!"colodoo"}
  * @date ${.now?date} ${.now?time}
  * @description 
  */

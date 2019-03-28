@@ -3,3 +3,4 @@
 /.settings
 /logs
 /.apt_generated_tests/
+/.apt_generated/

@@ -167,34 +167,7 @@ public class CreaterService {
 			MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 			myBatisGenerator.generate(null);
 
-			// 生成成功以后对model中的文件进行二次处理
-			// 处理时间格式化问题
-			String modelFileStr = createrCfg.getSrcPath() + JAVA_ROOT_PATH
-					+ mybatisParm.getPackageName().replace(".", "\\") + "\\model\\"
-					+ StringUtil.upperCase(StringUtil.underlineToCamel(mybatisParm.getTableName())) + ".java";
-			File modelFile = new File(modelFileStr);
-			FileReader fr = new FileReader(modelFile);
-			BufferedReader br = new BufferedReader(fr);
-			String str = null;
-			String rs = "";
-			while ((str = br.readLine()) != null) {
-				if (str.contains("package")) {
-					str += "\n" + "import org.springframework.format.annotation.DateTimeFormat;";
-					str += "\n" + "import com.fasterxml.jackson.annotation.JsonFormat;";
-				}
-				if (str.contains("private Date ")) {
-					str = "@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\", timezone = \"GMT+8\")\n@DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")\n"
-							+ str;
-				}
-				rs += str;
-			}
-			fr.close();
-			br.close();
-			FileWriter fw = new FileWriter(modelFile);
-			fw.write(rs);
-			fw.flush();
-			fw.close();
-			
+			// 生成VO类
 			this.modelVOCreate(mybatisParm);
 
 			result = "create mybatis done.";

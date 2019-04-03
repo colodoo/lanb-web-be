@@ -28,6 +28,12 @@ public class ${tableName?cap_first}Action {
     @Autowired
     ${tableName?cap_first}Service ${tableName}Service;
 
+	/**
+	 * 新增数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Map<String, Object> save(@RequestBody ${tableName?cap_first} model) {
@@ -41,6 +47,12 @@ public class ${tableName?cap_first}Action {
         return rspMap;
     }
 
+	/**
+	 * 删除数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Map<String, Object> delete(@RequestBody ${tableName?cap_first} model) {
@@ -54,6 +66,12 @@ public class ${tableName?cap_first}Action {
         return rspMap;
     }
 
+	/**
+	 * 更新数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/update")
     @ResponseBody
     public Map<String, Object> update(@RequestBody ${tableName?cap_first} model) {
@@ -67,6 +85,12 @@ public class ${tableName?cap_first}Action {
         return rspMap;
     }
 
+	/**
+	 * 根据id查找单条数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/queryById")
     @ResponseBody
     public Map<String, Object> queryById(@RequestBody ${tableName?cap_first} model) {
@@ -75,12 +99,24 @@ public class ${tableName?cap_first}Action {
         return rspMap;
     }
 
+	/**
+	 * 查找列表
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/query")
     @ResponseBody
     public List<${tableName?cap_first}> query(@RequestBody ${tableName?cap_first}VO model) {
         return ${tableName}Service.query(model);
     }
 
+	/**
+	 * 查找分页列表
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/queryPage")
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody ${tableName?cap_first}VO model) {

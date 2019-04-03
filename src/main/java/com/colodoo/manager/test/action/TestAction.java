@@ -4,7 +4,6 @@ import com.colodoo.manager.test.model.Test;
 import com.colodoo.manager.test.model.TestVO;
 import com.colodoo.manager.test.service.TestService;
 import com.colodoo.framework.utils.Contants;
-import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,7 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-3 10:04:05
+* @date 2019-4-3 11:37:54
 * @description
 */
 @Controller
@@ -29,6 +28,12 @@ public class TestAction {
     @Autowired
     TestService testService;
 
+	/**
+	 * 新增数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Map<String, Object> save(@RequestBody Test model) {
@@ -42,6 +47,12 @@ public class TestAction {
         return rspMap;
     }
 
+	/**
+	 * 删除数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Map<String, Object> delete(@RequestBody Test model) {
@@ -55,6 +66,12 @@ public class TestAction {
         return rspMap;
     }
 
+	/**
+	 * 更新数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/update")
     @ResponseBody
     public Map<String, Object> update(@RequestBody Test model) {
@@ -68,6 +85,12 @@ public class TestAction {
         return rspMap;
     }
 
+	/**
+	 * 根据id查找单条数据
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/queryById")
     @ResponseBody
     public Map<String, Object> queryById(@RequestBody Test model) {
@@ -76,12 +99,24 @@ public class TestAction {
         return rspMap;
     }
 
+	/**
+	 * 查找列表
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/query")
     @ResponseBody
     public List<Test> query(@RequestBody TestVO model) {
         return testService.query(model);
     }
 
+	/**
+	 * 查找分页列表
+	 * 
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/queryPage")
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody TestVO model) {

@@ -7,11 +7,11 @@
 
         <!--覆盖插件-->
         <plugin type="com.colodoo.framework.creater.plugin.OverIsMergeablePlugin"></plugin>
-        <plugin type="com.colodoo.framework.creater.plugin.MyPlugin"></plugin>
 
-        <commentGenerator>
+        <!-- <commentGenerator>
             <property name="suppressAllComments" value="true"/>
-        </commentGenerator>
+        </commentGenerator> -->
+        <commentGenerator type="com.colodoo.framework.creater.plugin.CustomCommentGenerator"></commentGenerator>
         <!--需要配置数据库连接-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/lanb_web_be?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"

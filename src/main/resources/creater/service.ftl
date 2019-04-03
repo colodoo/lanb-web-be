@@ -6,7 +6,6 @@ import com.colodoo.framework.utils.Contants;
 import ${packageName}.model.${tableName?cap_first};
 import ${packageName}.model.${tableName?cap_first}VO;
 import com.colodoo.framework.easyui.Page;
-import ${packageName}.model.${tableName?cap_first}Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -116,8 +115,8 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
     * @param page
     * @return
     */
-    public PageInfo query(Page page, ${tableName?cap_first}VO model) {
-        PageInfo pageInfo;
+    public PageInfo<${tableName?cap_first}> query(Page page, ${tableName?cap_first}VO model) {
+        PageInfo<${tableName?cap_first}> pageInfo;
         List<${tableName?cap_first}> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
@@ -125,7 +124,7 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        pageInfo = new PageInfo(list);
+        pageInfo = new PageInfo<${tableName?cap_first}>(list);
         return pageInfo;
     }
 }

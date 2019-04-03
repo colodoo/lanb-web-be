@@ -1,7 +1,7 @@
 		select
-		    <#list columns as column>
+<#list columns as column>
 			a.`${column.columnName}` as `${column._columnName}`<#if column_has_next>,</#if>
-		    </#list>
+</#list>
 		from
 		    ${tableName} a
 		<where>

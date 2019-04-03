@@ -4,23 +4,21 @@ import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.test.model.Test;
+import com.colodoo.manager.test.model.TestVO;
 import com.colodoo.framework.easyui.Page;
 import com.colodoo.manager.test.model.TestExample;
-import com.colodoo.manager.test.model.TestVO;
-import com.colodoo.manager.test.service.mapper.TestRelationMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.colodoo.manager.test.service.mapper.TestSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2018-8-30 10:41:40
+* @date 2019-4-3 10:04:05
 * @description 
 */
 @Service
@@ -28,8 +26,8 @@ import java.util.List;
 public class TestService extends BaseService<Test> {
 
 	@Autowired
-	TestRelationMapper testRelationMapper;
-	
+	TestSQLMapper sqlMapper;
+
     /**
     * 新增数据
     *
@@ -102,29 +100,32 @@ public class TestService extends BaseService<Test> {
     *
     * @return
     */
-    public List<Test> query() {
+    public List<Test> query(TestVO model) {
         List<Test> list = null;
-        TestExample example = new TestExample();
         try {
-            list = this.find(example);
+            list = sqlMapper.getTestList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
         return list;
     }
-    
+
     /**
     * 查找分页列表
     *
     * @param page
     * @return
     */
-    public PageInfo query(Page page) {
-        PageInfo pageInfo;
-        List<TestVO> list = null;
+    public PageInfo<Test> query(Page page, TestVO model) {
+        PageInfo<Test> pageInfo;
+        List<Test> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        list = testRelationMapper.getList();
-        pageInfo = new PageInfo(list);
+        try {
+            list = sqlMapper.getTestList(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        pageInfo = new PageInfo<Test>(list);
         return pageInfo;
     }
 }

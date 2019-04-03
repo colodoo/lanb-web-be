@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.test.service.mapper.TestSQLMapper">
+
+	<select id="getTestList" resultType="com.colodoo.manager.test.model.Test" parameterType="com.colodoo.manager.test.model.TestVO">
+		select
+			a.`test_id` as `testId`,
+			a.`test_name` as `testName`,
+			a.`create_time` as `createTime`
+		from
+		    test a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="testId != null and testId !=''">
+				     a.`test_id` = #{testId}
+				</if>
+				<if test="testName != null and testName !=''">
+				     a.`test_name` = #{testName}
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime}
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

@@ -18,7 +18,9 @@
 
 ### 前端代码  
 
-基于FreeMarkers生成的easyUI代码，如果你有更好的前端架构，那么你可以不生成这部分代码。
+该项目是在[lanb-web](https://github.com/lanb-code/lanb-web)抽离出的后端部分，删除了前端页面和前端代码生成部分。  
+
+为的是更好的实现前后端分离。
 
 ### 后端代码  
 
@@ -36,20 +38,20 @@
 
 ## 文档 
   
-[部署指南](./GET_STARTED.md)  
-[代码生成器](./CODE_CREATER.md)
+- [部署指南](./GET_STARTED.md)  
+- [代码生成器](./CODE_CREATER.md)
 
 ## 想法
   
 本框架还存在很多很多的问题。
   
-如果你对该框架有自己的[想法](https://github.com/lanb-code/lanb-web/issues)，那么可以在这里提出。  
+如果你对该框架有自己的[想法](https://github.com/colodoo/lanb-web-be/issues)，那么可以在这里提出。  
   
 ## 社区  
   
 - [组织](https://github.com/lanb-code)  
-- [加入讨论](https://github.com/lanb-code/lanb-web/issues)  
+- [加入讨论](https://github.com/colodoo/lanb-web-be/issues)  
   
 ## 许可证书  
   
-[MIT](https://github.com/lanb-code/lanb-web/blob/master/LICENSE)  
+[MIT](https://github.com/colodoo/lanb-web-be/blob/master/LICENSE)  

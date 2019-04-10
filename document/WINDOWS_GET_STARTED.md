@@ -2,7 +2,7 @@
 
 ## 下载
 ```bash
-git clone git@github.com:lanb-code/lanb-web.git
+git clone git@github.com:colodoo/lanb-web-be.git
 ```
 
 ## 导入

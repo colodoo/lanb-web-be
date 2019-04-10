@@ -39,7 +39,8 @@
 ## 文档 
   
 - [windows部署指南](./document/WINDOWS_GET_STARTED.md)  
-- [代码生成器](./document/CODE_CREATER.md)
+- [代码生成器](./document/CODE_CREATER.md)  
+- [系统模块文档](./document/SYS_MODULE_DOC.md)  
 
 ## 想法
   

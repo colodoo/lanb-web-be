@@ -1,4 +1,4 @@
-# lanb-web
+# lanb-web-be
 
 > 面向业务的Java框架 && 它基于Spring Boot
 
@@ -38,8 +38,8 @@
 
 ## 文档 
   
-- [部署指南](./GET_STARTED.md)  
-- [代码生成器](./CODE_CREATER.md)
+- [windows部署指南](./document/WINDOWS_GET_STARTED.md)  
+- [代码生成器](./document/CODE_CREATER.md)
 
 ## 想法
   

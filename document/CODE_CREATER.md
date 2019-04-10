@@ -4,7 +4,7 @@
 
 代码生成器为Web应用,所以需要正常启动项目后,才能使用.  
 
-参考[部署指南](./GET_STARTED.md).  
+参考[windows部署指南](./WINDOWS_GET_STARTED.md).  
 
 ## 配置数据库  
 
@@ -12,17 +12,20 @@
 
 只有正常的配置才能正常生成代码.  
 
-applicatio.yml
+application-dev.yml
+
 ```yaml
 creater:
-  src-path: H:\\LanbWeb
-  table-schema: lanbweb
+  src-path: 项目源代码路径
+database:
+  name: 数据库名
 ```
 
 generatorConfig.xml
+
 ```xml
 <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/lanbweb?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/数据库名?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
                         userId="root"
                         password=""
         >
@@ -34,12 +37,13 @@ generatorConfig.xml
 
 在生成代码之前,需要对数据表进行设计,因为它是基于数据表来生成代码的.  
 
-并且在这之前我们有一些预设的表,它用来提供基础服务;它在sql目录中.
-
+并且在这之前我们有一些预设的表,它用来提供基础服务;它在.\src\main\resources\sql目录中.
 
 ## 生成代码  
 
-它在 代码生成 => 代码生成器 中.
+因为删除了前端代码部分，所以现在你只能通过调用接口的方式来创建我们的代码。
+
+一般使用Postman等工具来调用我们的代码生成接口。
 
 ### 生成Java代码  
 

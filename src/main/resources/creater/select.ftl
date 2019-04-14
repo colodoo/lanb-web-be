@@ -8,7 +8,7 @@
 			<trim suffixOverrides="and">
 			<#list columns as column>
 				<if test="${column._columnName} != null and ${column._columnName} !=''">
-				     a.`${column.columnName}` = ${r"#{"}${column._columnName}${r"}"}
+				     a.`${column.columnName}` = ${r"#{"}${column._columnName}${r"}"} and
 				</if>
 			</#list>
 			</trim>

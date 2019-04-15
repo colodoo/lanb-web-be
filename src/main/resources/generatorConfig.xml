@@ -5,6 +5,11 @@
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
 
+		<property name="autoDelimitKeywords" value="true"/>
+		
+		<property name="beginningDelimiter" value="`"/>
+    	<property name="endingDelimiter" value="`"/>
+
         <!--覆盖插件-->
         <plugin type="com.colodoo.framework.creater.plugin.OverIsMergeablePlugin"></plugin>
 

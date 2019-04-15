@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.codeType.service.mapper.CodeTypeSQLMapper">
+
+	<select id="getCodeTypeList" resultType="com.colodoo.framework.manager.codeType.model.CodeType" parameterType="com.colodoo.framework.manager.codeType.model.CodeTypeVO">
+		select
+			a.`code_type_id` as `codeTypeId`,
+			a.`code_type_name` as `codeTypeName`
+		from
+		    code_type a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="codeTypeId != null and codeTypeId !=''">
+				     a.`code_type_id` = #{codeTypeId} and
+				</if>
+				<if test="codeTypeName != null and codeTypeName !=''">
+				     a.`code_type_name` = #{codeTypeName} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

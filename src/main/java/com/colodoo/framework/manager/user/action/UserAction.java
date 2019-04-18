@@ -6,6 +6,7 @@ import com.colodoo.framework.manager.log.model.Log;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.manager.user.service.UserService;
 import com.colodoo.framework.easyui.Page;
+import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 
@@ -14,6 +15,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,10 +38,10 @@ public class UserAction {
 
 	@RequestMapping(value = "/loginCheck")
 	@ResponseBody
-	public Msg loginCheck(User model, HttpServletRequest request) {
+	public Msg loginCheck(@RequestBody User model, HttpServletRequest request) {
 		Msg msg = new Msg();
 		HttpSession session = request.getSession();
-		SessionObject sessionObject = (SessionObject)session.getAttribute(Contants.SESSION_OBJECT_KEY);
+		SessionObject sessionObject = (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
 		try {
 			// 已经登录
 			if (sessionObject != null && sessionObject.getUser() != null) {
@@ -73,20 +75,15 @@ public class UserAction {
 	@ResponseBody
 	public Msg logout(HttpSession session) {
 		Msg msg = new Msg();
-		SessionObject sessionObject = (SessionObject)session.getAttribute(Contants.SESSION_OBJECT_KEY);
-		if (sessionObject.getUser() != null) {
+		SessionObject sessionObject = (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
+		if (sessionObject != null && sessionObject.getUser() != null) {
 			sessionObject.setUser(null);
 			sessionObject.setRoleUsers(null);
 			Subject subject = SecurityUtils.getSubject();
 			subject.logout();
-			session.removeAttribute(Contants.SESSION_OBJECT_KEY);
-			session.invalidate();
-			msg.setSuccess(true);
-			msg.setMsg("注销成功!");
-		} else {
-			msg.setSuccess(false);
-			msg.setMsg("注销失败!");
 		}
+		msg.setSuccess(true);
+		msg.setMsg("注销成功!");
 		return msg;
 	}
 
@@ -107,7 +104,7 @@ public class UserAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return map;
 	}
 

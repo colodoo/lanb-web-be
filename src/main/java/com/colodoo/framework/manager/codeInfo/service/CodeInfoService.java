@@ -1,56 +1,130 @@
 package com.colodoo.framework.manager.codeInfo.service;
 
+import com.colodoo.framework.base.abs.BaseService;
+import com.colodoo.framework.exception.DAOException;
+import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.codeInfo.model.CodeInfo;
-import com.colodoo.framework.utils.StringUtil;
+import com.colodoo.framework.manager.codeInfo.model.CodeInfoVO;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.manager.codeInfo.model.CodeInfoExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import com.colodoo.framework.manager.codeInfo.service.mapper.CodeInfoSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+* @author colodoo
+* @date 2019-4-24 22:40:31
+* @description 
+*/
 @Service
-public class CodeInfoService {
+@Slf4j
+public class CodeInfoService extends BaseService<CodeInfo> {
 
-    @Autowired
-    CodeInfoMapper codeInfoMapper;
+	@Autowired
+	CodeInfoSQLMapper sqlMapper;
 
-    public int save(CodeInfo model) {
-    model.setCodeInfoId(StringUtil.uuid());
-        return codeInfoMapper.insert(model);
+    /**
+    * 新增数据
+    *
+    * @param model
+    * @return
+    */
+    public int saveCodeInfo(CodeInfo model) {
+        int ret = Contants.CODE_FAILED;
+        model.setCodeInfoId(uuid());
+        // model.setCreateDate(new Date());
+        // model.setLastDate(new Date());
+        try {
+            ret = this.insert(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return ret;
     }
 
-    public int delete(CodeInfo model) {
-        return codeInfoMapper.deleteByPrimaryKey(model.getCodeInfoId());
+    /**
+    * 删除数据
+    *
+    * @param model
+    * @return
+    */
+    public int deleteCodeInfo(CodeInfo model) {
+        int ret = Contants.CODE_FAILED;
+        try {
+            ret = this.delete(model.getCodeInfoId());
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return ret;
     }
 
-    public int update(CodeInfo model) {
-        return codeInfoMapper.updateByPrimaryKey(model);
+    /**
+    * 更新数据
+    *
+    * @param model
+    * @return
+    */
+    public int updateCodeInfo(CodeInfo model) {
+        int ret = Contants.CODE_FAILED;
+        try {
+            ret = this.update(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return ret;
     }
 
+    /**
+    * 根据id查找单条数据
+    *
+    * @param model
+    * @return
+    */
     public CodeInfo queryById(CodeInfo model) {
-        return codeInfoMapper.selectByPrimaryKey(model.getCodeInfoId());
-    }
-
-    public List<CodeInfo> query() {
-        return codeInfoMapper.selectByExample(null);
-    }
-
-    public List<CodeInfo> query(CodeInfo model) {
-        CodeInfoExample example = new CodeInfoExample();
-        if(model.getCodeTypeId() != null) {
-            example.createCriteria().andCodeTypeIdEqualTo(model.getCodeTypeId());
+        CodeInfo codeInfo = null;
+        try {
+            codeInfo = this.get(model.getCodeInfoId());
+        } catch (DAOException e) {
+            log.error(e.getMsg());
         }
-        if(model.getCodeTypeId() != null) {
-            example.createCriteria().andCodeTypeIdEqualTo(model.getCodeTypeId());
-        }
-        return codeInfoMapper.selectByExample(example);
+        return codeInfo;
     }
 
-    public PageInfo query(Page page) {
+    /**
+    * 查找列表
+    *
+    * @return
+    */
+    public List<CodeInfo> query(CodeInfoVO model) {
+        List<CodeInfo> list = null;
+        try {
+            list = sqlMapper.getCodeInfoList(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return list;
+    }
+
+    /**
+    * 查找分页列表
+    *
+    * @param page
+    * @return
+    */
+    public PageInfo<CodeInfo> query(Page page, CodeInfoVO model) {
+        PageInfo<CodeInfo> pageInfo;
+        List<CodeInfo> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        return new PageInfo(codeInfoMapper.selectByExample(null));
+        try {
+            list = sqlMapper.getCodeInfoList(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        pageInfo = new PageInfo<CodeInfo>(list);
+        return pageInfo;
     }
 }

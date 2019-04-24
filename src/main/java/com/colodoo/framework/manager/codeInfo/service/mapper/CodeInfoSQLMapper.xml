@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.codeInfo.service.mapper.CodeInfoSQLMapper">
+
+	<select id="getCodeInfoList" resultType="com.colodoo.framework.manager.codeInfo.model.CodeInfo" parameterType="com.colodoo.framework.manager.codeInfo.model.CodeInfoVO">
+		select
+			a.`code_info_id` as `codeInfoId`,
+			a.`code_type_id` as `codeTypeId`,
+			a.`name` as `name`,
+			a.`value` as `value`,
+			a.`sort` as `sort`
+		from
+		    code_info a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="codeInfoId != null and codeInfoId !=''">
+				     a.`code_info_id` = #{codeInfoId} and
+				</if>
+				<if test="codeTypeId != null and codeTypeId !=''">
+				     a.`code_type_id` = #{codeTypeId} and
+				</if>
+				<if test="name != null and name !=''">
+				     a.`name` = #{name} and
+				</if>
+				<if test="value != null and value !=''">
+				     a.`value` = #{value} and
+				</if>
+				<if test="sort != null and sort !=''">
+				     a.`sort` = #{sort} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

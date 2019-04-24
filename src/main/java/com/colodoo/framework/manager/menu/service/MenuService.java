@@ -1,47 +1,140 @@
 package com.colodoo.framework.manager.menu.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.colodoo.framework.easyui.Tree;
+import com.colodoo.framework.base.abs.BaseService;
+import com.colodoo.framework.exception.DAOException;
+import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.menu.model.Menu;
 import com.colodoo.framework.manager.menu.model.MenuExample;
-import com.colodoo.framework.manager.menu.model.MenuTreeGrid;
+import com.colodoo.framework.manager.menu.model.MenuVO;
 import com.colodoo.framework.easyui.Page;
+import com.colodoo.framework.easyui.Tree;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import com.colodoo.framework.manager.menu.service.mapper.MenuSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
+/**
+* @author colodoo
+* @date 2019-4-24 22:32:52
+* @description 
+*/
 @Service
-public class MenuService {
+@Slf4j
+public class MenuService extends BaseService<Menu> {
 
-    @Autowired
+	@Autowired
+	MenuSQLMapper sqlMapper;
+	@Autowired
     MenuMapper menuMapper;
 
-    public PageInfo getRootMenuList(Page page) {
-        MenuExample example = new MenuExample();
-        example.createCriteria().andParentMenuIdEqualTo("");
-        example.setOrderByClause("sort");
-        PageHelper.startPage(page.getPage(), page.getRows());
-        List<Menu> list = menuMapper.selectByExample(example);
-        PageInfo pageInfo = new PageInfo(list);
-        return pageInfo;
-    }
-
-    public PageInfo getMenuList(Page page) {
-        if (page != null) {
-            PageHelper.startPage(page.getPage(), page.getRows());
+    /**
+    * 新增数据
+    *
+    * @param model
+    * @return
+    */
+    public int saveMenu(Menu model) {
+        int ret = Contants.CODE_FAILED;
+        model.setMenuId(uuid());
+        // model.setCreateDate(new Date());
+        // model.setLastDate(new Date());
+        try {
+            ret = this.insert(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
         }
-        List<Menu> list = menuMapper.selectByExample(null);
-        PageInfo pageInfo = new PageInfo(list);
-        return pageInfo;
+        return ret;
     }
 
-    public List<Tree> getSubMenuList(String parentMenuId) {
+    /**
+    * 删除数据
+    *
+    * @param model
+    * @return
+    */
+    public int deleteMenu(Menu model) {
+        int ret = Contants.CODE_FAILED;
+        try {
+            ret = this.delete(model.getMenuId());
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return ret;
+    }
+
+    /**
+    * 更新数据
+    *
+    * @param model
+    * @return
+    */
+    public int updateMenu(Menu model) {
+        int ret = Contants.CODE_FAILED;
+        try {
+            ret = this.update(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return ret;
+    }
+
+    /**
+    * 根据id查找单条数据
+    *
+    * @param model
+    * @return
+    */
+    public Menu queryById(Menu model) {
+        Menu menu = null;
+        try {
+            menu = this.get(model.getMenuId());
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return menu;
+    }
+
+    /**
+    * 查找列表
+    *
+    * @return
+    */
+    public List<Menu> query(MenuVO model) {
+        List<Menu> list = null;
+        try {
+            list = sqlMapper.getMenuList(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        return list;
+    }
+
+    /**
+    * 查找分页列表
+    *
+    * @param page
+    * @return
+    */
+    public PageInfo<Menu> query(Page page, MenuVO model) {
+        PageInfo<Menu> pageInfo;
+        List<Menu> list = null;
+        PageHelper.startPage(page.getPage(), page.getRows());
+        try {
+            list = sqlMapper.getMenuList(model);
+        } catch (DAOException e) {
+            log.error(e.getMsg());
+        }
+        pageInfo = new PageInfo<Menu>(list);
+        return pageInfo;
+    }
+    
+    public List<Tree> getTreeMenu(String parentMenuId) {
         if (parentMenuId == null) {
             parentMenuId = "";
         }
@@ -59,7 +152,7 @@ public class MenuService {
             HashMap<String, String> attr = new HashMap<String, String>();
             attr.put("menuUrl", menu.getMenuUrl());
             tree.setAttributes(attr);
-            List tempList = getSubMenuList(tree.getId());
+            List tempList = getTreeMenu(tree.getId());
             if(tempList.size() != 0) {
                 tree.setChildren(tempList);
             }
@@ -67,83 +160,4 @@ public class MenuService {
         }
         return list;
     }
-
-    public PageInfo getMenuTreeGrid() {
-        List<MenuTreeGrid> list = getSubMenuTreeGrid("");
-        PageInfo pageInfo = new PageInfo(list);
-        return pageInfo;
-    }
-
-    /**
-     * 取树数据
-     *
-     * @param parentMenuId
-     * @return
-     */
-    public List<MenuTreeGrid> getSubMenuTreeGrid(String parentMenuId) {
-        if (parentMenuId == null) {
-            parentMenuId = "";
-        }
-        List<MenuTreeGrid> list = new ArrayList<MenuTreeGrid>();
-        MenuExample example = new MenuExample();
-        example.createCriteria().andParentMenuIdEqualTo(parentMenuId);
-        example.setOrderByClause("sort");
-        List<Menu> menus = menuMapper.selectByExample(example);
-        for (Menu menu : menus) {
-            String menuStr = JSONObject.toJSONString(menu);
-            MenuTreeGrid menuTreeGrid = JSONObject.parseObject(menuStr, MenuTreeGrid.class);
-            menuTreeGrid.set_parentId(menu.getParentMenuId());
-            menuTreeGrid.setChildren(getSubMenuTreeGrid(menuTreeGrid.getMenuId()));
-            list.add(menuTreeGrid);
-        }
-        return list;
-    }
-
-    /**
-     * 取树数据1
-     *
-     * @param page
-     * @return
-     */
-    public PageInfo getSubMenuTreeGrid1(Page page) {
-        List<MenuTreeGrid> list = new ArrayList<MenuTreeGrid>();
-        if (page != null) {
-            PageHelper.startPage(page.getPage(), page.getRows());
-        }
-        MenuExample example = new MenuExample();
-        example.setOrderByClause("sort");
-        List<Menu> menus = menuMapper.selectByExample(example);
-        for (Menu menu : menus) {
-            String menuStr = JSONObject.toJSONString(menu);
-            MenuTreeGrid menuTreeGrid = JSONObject.parseObject(menuStr, MenuTreeGrid.class);
-            menuTreeGrid.setState("close");
-            if (!"".equals(menu.getParentMenuId())) {
-                menuTreeGrid.set_parentId(menu.getParentMenuId());
-            } else {
-                menuTreeGrid.set_parentId(null);
-            }
-            list.add(menuTreeGrid);
-        }
-        PageInfo pageInfo = new PageInfo(list);
-        return pageInfo;
-    }
-
-    public int saveMenu(Menu menu) {
-        menu.setMenuId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
-        if (menu.getSort() == null) {
-            menu.setSort(0);
-        }
-        return menuMapper.insert(menu);
-    }
-
-    public int editMenu(Menu menu) {
-        return menuMapper.updateByPrimaryKey(menu);
-    }
-
-    public int destroyMenu(Menu menu) {
-        MenuExample example = new MenuExample();
-        example.createCriteria().andMenuIdEqualTo(menu.getMenuId());
-        return menuMapper.deleteByExample(example);
-    }
-
 }

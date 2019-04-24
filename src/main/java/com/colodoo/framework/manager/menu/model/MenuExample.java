@@ -4,46 +4,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuExample {
+    /**
+     * menu
+     */
     protected String orderByClause;
 
+    /**
+     * menu
+     */
     protected boolean distinct;
 
+    /**
+     * menu
+     */
     protected List<Criteria> oredCriteria;
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public MenuExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -52,17 +97,28 @@ public class MenuExample {
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-04-24
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
     }
 
+    /**
+     * menu 2019-04-24
+     */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
@@ -505,6 +561,9 @@ public class MenuExample {
         }
     }
 
+    /**
+     *  * menu
+     */
     public static class Criteria extends GeneratedCriteria {
 
         protected Criteria() {
@@ -512,6 +571,9 @@ public class MenuExample {
         }
     }
 
+    /**
+     * menu 2019-04-24
+     */
     public static class Criterion {
         private String condition;
 

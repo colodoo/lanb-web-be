@@ -7,7 +7,6 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="code_type_name" jdbcType="VARCHAR" property="codeTypeName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    code_info_id, ci.code_type_id, name, value, sort, ct.code_type_name
+    code_info_id, code_type_id, `name`, `value`, sort
   </sql>
   <select id="selectByExample" parameterType="com.colodoo.framework.manager.codeInfo.model.CodeInfoExample" resultMap="BaseResultMap">
     select
@@ -76,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from code_info ci left join code_type ct on ct.code_type_id = ci.code_type_id
+    from code_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -101,8 +100,8 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.colodoo.framework.manager.codeInfo.model.CodeInfo">
-    insert into code_info (code_info_id, code_type_id, name, 
-      value, sort)
+    insert into code_info (code_info_id, code_type_id, `name`, 
+      `value`, sort)
     values (#{codeInfoId,jdbcType=VARCHAR}, #{codeTypeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{value,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER})
   </insert>
@@ -116,10 +115,10 @@
         code_type_id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="value != null">
-        value,
+        `value`,
       </if>
       <if test="sort != null">
         sort,
@@ -159,10 +158,10 @@
         code_type_id = #{record.codeTypeId,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.value != null">
-        value = #{record.value,jdbcType=VARCHAR},
+        `value` = #{record.value,jdbcType=VARCHAR},
       </if>
       <if test="record.sort != null">
         sort = #{record.sort,jdbcType=INTEGER},
@@ -176,8 +175,8 @@
     update code_info
     set code_info_id = #{record.codeInfoId,jdbcType=VARCHAR},
       code_type_id = #{record.codeTypeId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      value = #{record.value,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `value` = #{record.value,jdbcType=VARCHAR},
       sort = #{record.sort,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,10 +189,10 @@
         code_type_id = #{codeTypeId,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="value != null">
-        value = #{value,jdbcType=VARCHAR},
+        `value` = #{value,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -204,8 +203,8 @@
   <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.codeInfo.model.CodeInfo">
     update code_info
     set code_type_id = #{codeTypeId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      value = #{value,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER}
     where code_info_id = #{codeInfoId,jdbcType=VARCHAR}
   </update>

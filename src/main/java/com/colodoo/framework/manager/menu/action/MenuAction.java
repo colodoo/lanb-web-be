@@ -1,22 +1,26 @@
 package com.colodoo.framework.manager.menu.action;
 
 import com.colodoo.framework.easyui.Tree;
-import com.colodoo.framework.manager.menu.model.MenuTreeGrid;
-import com.colodoo.framework.manager.menu.service.MenuMapper;
 import com.colodoo.framework.manager.menu.model.Menu;
+import com.colodoo.framework.manager.menu.model.MenuVO;
 import com.colodoo.framework.manager.menu.service.MenuService;
-import com.colodoo.framework.easyui.Page;
+import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
+/**
+* @author colodoo
+* @date 2019-4-24 22:32:53
+* @description
+*/
 @Controller
 @RequestMapping(value = "/menu")
 @CrossOrigin
@@ -24,83 +28,115 @@ public class MenuAction {
 
     @Autowired
     MenuService menuService;
-    @Autowired
-    MenuMapper menuMapper;
 
-    @RequestMapping(value = "/getRootMenuList")
+	/**
+	 * 新增数据
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/save")
     @ResponseBody
-    public Map getRootMenuList(Page page) {
-        Map rspMap = new HashMap(2);
-        PageInfo pageInfo = menuService.getRootMenuList(page);
-        rspMap.put("rows", pageInfo.getList());
-        rspMap.put("total", pageInfo.getTotal());
-        return rspMap;
-    }
-
-    @RequestMapping(value = "/getMenuList")
-    @ResponseBody
-    public Map getMenuList(Page page) {
-        Map rspMap = new HashMap(2);
-        PageInfo pageInfo = menuService.getMenuList(page);
-        rspMap.put("rows", pageInfo.getList());
-        rspMap.put("total", pageInfo.getTotal());
-        return rspMap;
-    }
-
-    @RequestMapping(value = "/getSubMenuList")
-    @ResponseBody
-    public List<Tree> getSubMenuList(String parentMenuId) {
-        return menuService.getSubMenuList(parentMenuId);
-    }
-
-    @RequestMapping(value = "/getMenuTreeGrid")
-    @ResponseBody
-    public Map getMenuTreeGrid() {
-        Map rspMap = new HashMap(2);
-        PageInfo pageInfo = menuService.getMenuTreeGrid();
-        rspMap.put("rows", pageInfo.getList());
-        rspMap.put("total", pageInfo.getTotal());
-        return rspMap;
-    }
-
-    @RequestMapping(value = "/getSubMenuTreeGrid")
-    @ResponseBody
-    public List<MenuTreeGrid> getSubMenuTreeGrid() {
-        return menuService.getSubMenuTreeGrid("");
-    }
-
-    @RequestMapping(value = "/getSubMenuTreeGrid1")
-    @ResponseBody
-    public Map getSubMenuTreeGrid1(Page page) {
-        Map rspMap = new HashMap(2);
-        PageInfo pageInfo = menuService.getSubMenuTreeGrid1(page);
-        rspMap.put("rows", pageInfo.getList());
-        rspMap.put("total", pageInfo.getTotal());
-        return rspMap;
-    }
-
-    @RequestMapping(value = "/saveMenu")
-    @ResponseBody
-    public int saveMenu(Menu menu) {
-        return menuService.saveMenu(menu);
-    }
-
-    @RequestMapping(value = "/editMenu")
-    @ResponseBody
-    public int editMenu(Menu menu) {
-        return menuService.editMenu(menu);
-    }
-
-    @RequestMapping(value = "/destroyMenu")
-    @ResponseBody
-    public Map destroyMenu(Menu menu) {
-        HashMap result = new HashMap(1);
-        if (menuService.destroyMenu(menu) >= 1) {
-            result.put("success", true);
+    public Map<String, Object> save(@RequestBody Menu model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        int ret = menuService.saveMenu(model);
+        if(ret > 0) {
+            rspMap.put("success", true);
         } else {
-            result.put("errorMsg", "删除失败");
+            rspMap.put("msg", Contants.MSG_SAVE_FAIL);
         }
-        return result;
+        return rspMap;
     }
 
+	/**
+	 * 删除数据
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public Map<String, Object> delete(@RequestBody Menu model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        int ret = menuService.deleteMenu(model);
+        if(ret > 0) {
+            rspMap.put("success", true);
+        } else {
+            rspMap.put("msg", Contants.MSG_DELETE_FAIL);
+        }
+        return rspMap;
+    }
+
+	/**
+	 * 更新数据
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/update")
+    @ResponseBody
+    public Map<String, Object> update(@RequestBody Menu model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        int ret = menuService.updateMenu(model);
+        if(ret > 0) {
+            rspMap.put("success", true);
+        } else {
+            rspMap.put("msg", Contants.MSG_UPDATE_FAIL);
+        }
+        return rspMap;
+    }
+
+	/**
+	 * 根据id查找单条数据
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/queryById")
+    @ResponseBody
+    public Map<String, Object> queryById(@RequestBody Menu model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        rspMap.put("rows", menuService.queryById(model));
+        return rspMap;
+    }
+
+	/**
+	 * 查找列表
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/query")
+    @ResponseBody
+    public List<Menu> query(@RequestBody MenuVO model) {
+        return menuService.query(model);
+    }
+
+	/**
+	 * 查找分页列表
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/queryPage")
+    @ResponseBody
+    public Map<String, Object> queryPage(@RequestBody MenuVO model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        PageInfo<Menu> info = menuService.query(model.getPage(), model);
+        rspMap.put(Contants.TABLE_ROWS, info.getList());
+        rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
+        return rspMap;
+    }
+    
+    /**
+	 * 查找列表
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/getTreeMenu")
+    @ResponseBody
+    public List<Tree> getTreeMenu(@RequestBody MenuVO model) {
+        return menuService.getTreeMenu(model.getParentMenuId());
+    }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.menu.service.mapper.MenuSQLMapper">
+
+	<select id="getMenuList" resultType="com.colodoo.framework.manager.menu.model.Menu" parameterType="com.colodoo.framework.manager.menu.model.MenuVO">
+		select
+			a.`menu_id` as `menuId`,
+			a.`menu_name` as `menuName`,
+			a.`parent_menu_id` as `parentMenuId`,
+			a.`menu_url` as `menuUrl`,
+			a.`sort` as `sort`,
+			a.`visible` as `visible`
+		from
+		    menu a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="menuId != null and menuId !=''">
+				     a.`menu_id` = #{menuId} and
+				</if>
+				<if test="menuName != null and menuName !=''">
+				     a.`menu_name` = #{menuName} and
+				</if>
+				<if test="parentMenuId != null and parentMenuId !=''">
+				     a.`parent_menu_id` = #{parentMenuId} and
+				</if>
+				<if test="menuUrl != null and menuUrl !=''">
+				     a.`menu_url` = #{menuUrl} and
+				</if>
+				<if test="sort != null and sort !=''">
+				     a.`sort` = #{sort} and
+				</if>
+				<if test="visible != null and visible !=''">
+				     a.`visible` = #{visible} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

@@ -41,7 +41,7 @@ public class MenuService extends BaseService<Menu> {
     */
     public int saveMenu(Menu model) {
         int ret = Contants.CODE_FAILED;
-        model.setMenuId(uuid());
+        // model.setMenuId(uuid());
         // model.setCreateDate(new Date());
         // model.setLastDate(new Date());
         try {

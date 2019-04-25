@@ -3,6 +3,8 @@ package com.colodoo.framework.manager;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,8 @@ public class IndexAction {
 	
 	@RequestMapping(value = "/404")
     @ResponseBody
-	public Msg error() {
+	public Msg error(HttpServletResponse response) {
+		response.setStatus(401);
 		Msg msg = new Msg(false, "", "您访问的地址不存在!");
         return msg;
 	}

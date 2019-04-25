@@ -1,5 +1,6 @@
 package com.colodoo.framework.creater.config;
 
+import java.io.File;
 import java.io.Serializable;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +11,10 @@ import org.springframework.stereotype.Component;
 public class CreaterCfg implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public CreaterCfg() {
+		this.srcPath = new File("").getAbsolutePath();
+	}
 
 	// 项目源代码地址
 	private String srcPath;

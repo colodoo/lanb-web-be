@@ -3,8 +3,8 @@ package com.colodoo.framework.creater.service;
 import com.colodoo.framework.utils.StringUtil;
 import com.colodoo.framework.creater.config.CreaterCfg;
 import com.colodoo.framework.creater.model.*;
-import com.colodoo.framework.manager.menu.model.Menu;
-import com.colodoo.framework.manager.menu.service.MenuService;
+//import com.colodoo.framework.manager.menu.model.Menu;
+//import com.colodoo.framework.manager.menu.service.MenuService;
 
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -49,8 +49,8 @@ public class CreaterService {
 	CreaterMapper createrMapper;
 	@Autowired
 	CreaterCfg createrCfg;
-	@Autowired
-	MenuService menuService;
+//	@Autowired
+//	MenuService menuService;
 
 	/**
 	 * 取查询语句
@@ -426,12 +426,12 @@ public class CreaterService {
 		template.process(paramMap, writer1);
 
 		// 创建功能菜单
-		Menu menu = new Menu();
-		menu.setMenuName(menuTitle);
-		menu.setMenuUrl(
-				StringUtil.underlineToCamel(tableName) + "/" + StringUtil.underlineToCamel(tableName) + "Manager");
-		menu.setParentMenuId(DEFAULT_PARENT_MENU_ID);
-		menuService.saveMenu(menu);
+//		Menu menu = new Menu();
+//		menu.setMenuName(menuTitle);
+//		menu.setMenuUrl(
+//				StringUtil.underlineToCamel(tableName) + "/" + StringUtil.underlineToCamel(tableName) + "Manager");
+//		menu.setParentMenuId(DEFAULT_PARENT_MENU_ID);
+//		menuService.saveMenu(menu);
 
 		return writer.toString();
 	}

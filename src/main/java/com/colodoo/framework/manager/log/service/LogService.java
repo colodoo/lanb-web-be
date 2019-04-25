@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class LogService extends BaseService<Log> {
     public int saveLog(Log model) {
         int ret = Contants.CODE_FAILED;
         model.setLogId(uuid());
-        // model.setCreateDate(new Date());
+         model.setCreateTime(new Date());
         // model.setLastDate(new Date());
         try {
             ret = this.insert(model);

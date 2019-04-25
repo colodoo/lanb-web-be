@@ -79,6 +79,7 @@ public class UserService {
 	 */
 	public Msg loginCheck(User model, HttpServletRequest request) throws DAOException {
 		Msg msg = new Msg();
+		Log log = new Log();
 		// 是否存在空参数
 		if (model.getUserName() == null || "".equals(model.getUserName()) || model.getPassword() == null || "".equals(model.getPassword())) {
 			msg.setSuccess(false);
@@ -98,6 +99,10 @@ public class UserService {
 			List<RoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
 			sessionObject.setRoleUsers(roleUsers);
 			session.setAttribute(Contants.SESSION_OBJECT_KEY, sessionObject);
+			log.setLogSource(RequestUtils.getRemoteAddress(request));
+			log.setLogType("LOGIN_SUCCESS");
+			log.setLogContent(user.getUserName() + " 登陆成功");
+			logService.saveLog(log);
 			return msg;
 		} else {
 			this.failLogin(model, request);
@@ -116,7 +121,7 @@ public class UserService {
 		// 插入一条失败登录失败日志
 		Log log = new Log();
 		log.setCreateTime(new Date());
-		log.setLogContent("登录失败");
+		log.setLogContent(model.getUserName() + " 登录失败");
 		log.setLogSource(RequestUtils.getRemoteAddress(request));
 		log.setLogType("LOGIN_FAILD");
 		logService.saveLog(log);

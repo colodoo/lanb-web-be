@@ -21,7 +21,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public CodeTypeExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -29,7 +29,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -37,7 +37,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -45,7 +45,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -53,7 +53,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public boolean isDistinct() {
         return distinct;
@@ -61,7 +61,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -69,7 +69,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -77,7 +77,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -87,7 +87,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -99,7 +99,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -108,7 +108,7 @@ public class CodeTypeExample {
 
     /**
      *
-     * @mbg.generated 2019-04-15
+     * @mbg.generated 2019-04-18
      */
     public void clear() {
         oredCriteria.clear();
@@ -117,7 +117,7 @@ public class CodeTypeExample {
     }
 
     /**
-     * code_type 2019-04-15
+     * code_type 2019-04-18
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -312,7 +312,7 @@ public class CodeTypeExample {
     }
 
     /**
-     * code_type 2019-04-15
+     * code_type 2019-04-18
      */
     public static class Criterion {
         private String condition;

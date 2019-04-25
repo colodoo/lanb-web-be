@@ -5,6 +5,7 @@ import com.colodoo.framework.creater.service.CreaterService;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -66,16 +67,18 @@ public class CreaterAction {
      */
     @RequestMapping(value = "/createAllString")
     @ResponseBody
-    public Map createAllString(BaseParm allParm) {
+    public Map createAllString(@RequestBody BaseParm allParm) {
         Map rspMap = new HashMap();
         try {
             String mybatisStr = createrService.createMybatisString(allParm);
             String serviceStr = createrService.createServiceString(allParm);
             String actionStr = createrService.createActionString(allParm);
             rspMap.put("msg", "创建成功!");
+            rspMap.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();
             rspMap.put("msg", "创建失败!");
+            rspMap.put("success", false);
         }
         return rspMap;
     }

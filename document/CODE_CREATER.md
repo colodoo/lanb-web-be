@@ -16,7 +16,7 @@ application-dev.yml
 
 ```yaml
 creater:
-  src-path: 项目源代码路径
+  src-path: 项目源代码路径（默认为本项目，如果要手动配置则设置，否则注释掉）
 database:
   name: 数据库名
 ```
